@@ -1,3 +1,5 @@
+library(dplyr)
+
 adl.labels <- read.table("./R/UCI HAR Dataset/activity_labels.txt", sep = "")
 activityLabels <- as.character(adl.labels$V2)
 activityLabels
@@ -90,7 +92,6 @@ allstd  <- alldf[grep('std()', names(alldf), fixed = TRUE)]
 #create a unique dataframe with subject,activity and the selected column
 all_mean_std <- cbind(alldf %>%  select(subject, Activity) , allmean, allstd)
 
-library(dplyr)
 # group by subject and activity create a dataset with the mean of all the others
 by_subject_and_activity <-all_mean_std %>% group_by(subject,Activity) %>% summarise(across(everything(), list(mean)))
 
